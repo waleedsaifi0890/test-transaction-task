@@ -1,0 +1,7 @@
+// Vitest Snapshot v1
+
+exports[`snapshot 1`] = `
+<h1>
+  Guest Guard
+</h1>
+`;

@@ -1,0 +1,74 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/" },
+    { "source": "/(.*)", "destination": "/" },
+    {
+      "source": "/sign-up",
+      "destination": "/sign-up"
+    },
+    {
+      "source": "/class-details",
+      "destination": "/class-details"
+    },
+    {
+      "source": "/classes",
+      "destination": "/classes"
+    },
+    {
+      "source": "/forgot-password",
+      "destination": "/forgot-password"
+    },
+    {
+      "source": "/checkToken",
+      "destination": "/checkToken"
+    },
+    {
+      "source": "/lesson-planner",
+      "destination": "/lesson-planner"
+    },
+    {
+      "source": "/assessment",
+      "destination": "/assessment"
+    },
+    {
+      "source": "/assessment-details",
+      "destination": "/assessment-details"
+    },
+    {
+      "source": "/grading",
+      "destination": "/grading"
+    },
+    {
+      "source": "/grading-details",
+      "destination": "/grading-details"
+    },
+    {
+      "source": "/lesson",
+      "destination": "/lesson"
+    },
+    {
+      "source": "/profile",
+      "destination": "/profile"
+    },
+    {
+      "source": "/teacher-toolbox",
+      "destination": "/teacher-toolbox"
+    },
+    {
+      "source": "/learning-hub",
+      "destination": "/learning-hub"
+    },
+    {
+      "source": "/lesson-genius",
+      "destination": "/lesson-genius"
+    },
+    {
+      "source": "/sheila-chatbot",
+      "destination": "/sheila-chatbot"
+    },
+    {
+      "source": "/pic-plan",
+      "destination": "/pic-plan"
+    }
+  ]
+}

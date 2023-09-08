@@ -1,0 +1,127 @@
+// Vitest Snapshot v1
+
+exports[`snapshots — framed 1`] = `
+<article
+  className="overflow-hidden rounded h-full flex flex-col bg-white shadow-lg"
+>
+  <img
+    className=""
+    src="https://picsum.photos/id/1062/500/375"
+  />
+  <div
+    className="flex flex-col flex-grow px-4 pb-3"
+  >
+    <p
+      className="heading-four mt-4"
+    >
+      Lorem Ipsum Dolor
+    </p>
+    <p
+      className="text-regular mt-2"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+    </p>
+  </div>
+</article>
+`;
+
+exports[`snapshots — vanilla 1`] = `
+<article
+  className="overflow-hidden rounded h-full flex flex-col"
+>
+  <img
+    className="rounded shadow-lg"
+    src="https://picsum.photos/id/1062/500/375"
+  />
+  <div
+    className="flex flex-col flex-grow"
+  >
+    <p
+      className="heading-four mt-4"
+    >
+      Lorem Ipsum Dolor
+    </p>
+    <p
+      className="text-regular mt-2"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+    </p>
+  </div>
+</article>
+`;
+
+exports[`snapshots — with meta content 1`] = `
+<article
+  className="overflow-hidden rounded h-full flex flex-col"
+>
+  <img
+    className="rounded shadow-lg"
+    src="https://picsum.photos/id/1062/500/375"
+  />
+  <div
+    className="flex flex-col flex-grow"
+  >
+    <p
+      className="heading-four mt-4"
+    >
+      Lorem Ipsum Dolor
+    </p>
+    <p
+      className="text-regular mt-2"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+    </p>
+    <div
+      className="pt-6"
+    >
+      <a
+        className="inline-flex items-center rounded !leading-none border border-true-gray-300 text-true-gray-700 px-6 py-4 heading-six space-x-3"
+        href="#"
+        rel="noreferrer"
+      >
+        <span>
+          Read more
+        </span>
+      </a>
+    </div>
+  </div>
+</article>
+`;
+
+exports[`snapshots — with meta content and auto height 1`] = `
+<article
+  className="overflow-hidden rounded h-full flex flex-col"
+>
+  <img
+    className="rounded shadow-lg"
+    src="https://picsum.photos/id/1062/500/375"
+  />
+  <div
+    className="flex flex-col flex-grow"
+  >
+    <p
+      className="heading-four mt-4"
+    >
+      Lorem Ipsum Dolor
+    </p>
+    <p
+      className="text-regular mt-2"
+    >
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+    </p>
+    <div
+      className="pt-6 mt-auto"
+    >
+      <a
+        className="inline-flex items-center rounded !leading-none border border-true-gray-300 text-true-gray-700 px-6 py-4 heading-six space-x-3"
+        href="#"
+        rel="noreferrer"
+      >
+        <span>
+          Read more
+        </span>
+      </a>
+    </div>
+  </div>
+</article>
+`;
