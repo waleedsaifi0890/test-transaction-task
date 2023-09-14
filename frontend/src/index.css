@@ -458,3 +458,9 @@ html {
 .blur {
   filter: blur(5px); /* Adjust the blur intensity as needed */
 }
+
+input[type="checkbox"]:checked + .checked-switch::before,
+input[type="checkbox"]:checked + .checked-switch::after {
+  background-color: blue; /* Change this to your desired blue color */
+  /* Add any other styles you want for the toggle switch when checked */
+}

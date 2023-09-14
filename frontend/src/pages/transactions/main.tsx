@@ -2,22 +2,33 @@ import React, { useState, useEffect } from 'react';
 import {
   Heading,
   Layout,
-  FullPageTable,
+  TransactionTable,
   Pagination,
 } from '@app/components';
-import { UpdateModal } from '@app/views/transaction/index';
 import api from '../../utils/api';
 import {TransactionArray} from "../../types/transaction"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Classes = () => {
+
+  //  State for Getting all Record 
   const [transactionData, setTransactionData] = useState<TransactionArray[]>([]);
+
+  //  Search Filter array
+
   const [searchResult, setSearchResult] = useState<TransactionArray[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  //  Pop Modal state 
+
+
+  //  Search input field state 
   const [searchState, setSearchState] = useState('');
-  const [selectedForm, setSelectedForm] = useState<any>();
+
   const [loader,setLoader]=useState(false)
 
 
+// ****************** Pagination States *******************
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
@@ -26,39 +37,18 @@ const Classes = () => {
   const endIndex = Math.min(startIndex + itemsPerPage, transactionData.length);
   const currentItems = searchResult.slice(startIndex, endIndex);
 
-  const [formData, setFormData] = useState({
-    allowed: false,
-    suspicious: false,
-    comment: '',
-  });
+  // function  for getting all transacton
+
   const fetchTransactionData = async () => {
     
     try {
       const response = await api.get('/transaction');
     setLoader(false)
 
-      // Sort the most recent record to the top
-      const sortedData = [...response.data].sort((a, b) => {
-        const dateB = new Date(b.createdAt);
-        const dateA = new Date(a.createdAt);
+      
 
-        if (dateB < dateA) {
-          return -1; // `b` comes before `a` in the sorted order
-        } else if (dateB > dateA) {
-          return 1; // `b` comes after `a` in the sorted order
-        } else {
-          return 0; // `a` and `b` have the same date, no need to change their relative order
-        }
-      });
-
-      // Now it is sorted remove createdAt so it doesn't display in the table
-      const modifiedData = sortedData.map((item) => {
-        const { createdAt, ...rest } = item;
-        return rest;
-      });
-
-      setTransactionData(modifiedData);
-      setSearchResult(modifiedData);
+      setTransactionData([...response.data.data]);
+      setSearchResult([...response.data.data]);
     } catch (error: any) {
     setLoader(false)
 
@@ -107,60 +97,35 @@ const Classes = () => {
   
     setSearchResult(filteredData);
   };
-  
 
+  const UpdateData = (response:any) =>{
+    toast.success(response.data.message);
+    let findIndex = transactionData.findIndex((item:any)=>item.id===response.data.data.id)
+    let records = transactionData
+    records[findIndex]=response.data.data
+    setTransactionData([...records])
+  }
  
-  const handleGetData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedValue = e.target.value; // Get the selected value as a string
-    let newValue;
-  
-    // Check if the selected value represents "true" or "false" and convert it to a boolean
-    if (selectedValue === "true") {
-      newValue = true;
-    } else if (selectedValue === "false") {
-      newValue = false;
-    } else {
-      // Handle other cases or invalid values here, e.g., set to a default value
-      newValue = selectedValue; // You can set it to true or any other default value
-    }
-  
-    setFormData({ ...formData, [e.target.name]: newValue });
-  };
-  
-
-  const handleRowClick = (rowData: TransactionArray,index:number) => {
-    setIsModalOpen(true);
-    setSelectedForm(rowData);
-    setFormData({
-      ...formData,
-      allowed: rowData.isAllowed,
-      suspicious: rowData.isSuspicious,
-      comment: rowData.comment,
-    });
-
-  };
-
-  const handleUpdate =async (e:React.MouseEvent) =>{
-    e.preventDefault()
-    let data ={
-      isAllowed:formData.allowed,
-      isSuspicious:formData.suspicious,
-      comment:formData.comment
-    }
-    try {
-      const response = await api.put(`/transaction/${selectedForm._id}`,data);
-
+  const UpdateSuspicious = async (data:any) =>{
     
-
-      let findIndex = transactionData.findIndex((item:any)=>item._id===response.data._id)
-      let records = transactionData
-
-      records[findIndex]=response.data
-
-      setTransactionData([...records])
-      setIsModalOpen(false)
+    try {
+    
+      const response = await api.post(`/transaction/${data.id}/flag`,{isSuspicious:data?.isSuspicious?false:true});
+      UpdateData(response)
 
     } catch (error: any) {
+      toast.error(error?.response?.data?.message);
+      console.error('Error fetching transaction data:', error);
+    }
+  }
+  const UpdateAllowed =async (data:any) =>{
+    try {
+    
+      const response = await api.post(`/transaction/${data.id}/allow`,{isAllowed:data?.isAllowed?false:true});
+      UpdateData(response)
+
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message);
       console.error('Error fetching transaction data:', error);
     }
   }
@@ -182,7 +147,7 @@ const Classes = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder="Search transation"
+              placeholder="Search transaction"
               value={searchState}
               className="h-9 max-w-[194px] w-[100%] indent-8 border border-[#b8bacd] rounded  change"
               onChange={handleSearch}
@@ -205,10 +170,11 @@ const Classes = () => {
         </div>
         <div className='className="relative overflow-x-auto'>
          
-          <FullPageTable
+          <TransactionTable
             currentItems={currentItems}
-            handleRowClick={handleRowClick}
             loader={loader}
+            UpdateSuspicious={UpdateSuspicious}
+            UpdateAllowed={UpdateAllowed}
           />
           {transactionData.length > 0 ? (
             ''
@@ -220,38 +186,25 @@ const Classes = () => {
                 element="h3"
                 className="text-center"
               />
-              <p
-                onClick={() => {
-                  setTransactionData(transactionData);
-                  setSearchState('');
-                }}
-                className="text-black underline text-center cursor-pointer mt-2"
-              >
-                Click here to view all
-              </p>
+              
             </div>
           )}
-          <div className="py-10">
+          {transactionData.length>0? <div className="py-10">
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
               setCurrentPage={setCurrentPage}
               setItemsPerPage={setItemsPerPage}
             />
-          </div>
+          </div>:""}
+         
         </div>
         <div>
-          <UpdateModal
-            isOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-            formData={formData}
-            handleGetData={handleGetData}
-            handleUpdate={handleUpdate}
-            
-          />
+          
          
         </div>
       </Layout>
+      <ToastContainer />
     </React.Fragment>
   );
 };

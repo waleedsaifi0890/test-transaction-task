@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'http://localhost:4000', // your backend API URL
-  // baseURL:"https://dev-ai-endpoint.syll.ai/api/"
+
 });
 
 // Add a request interceptor

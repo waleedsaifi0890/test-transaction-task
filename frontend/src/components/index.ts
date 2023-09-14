@@ -15,5 +15,5 @@ export { default as Layout} from "./layout";
 export {default as Sidebar} from "./sidebar";
 export {default as Header} from "./header";
 export {default as Pagination} from "./pagination";
-export {default as FullPageTable} from "./tabel";
+export {default as TransactionTable} from "./tabel";
 

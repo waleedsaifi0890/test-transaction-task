@@ -7,6 +7,7 @@
       isAllowed:boolean,
       isSuspicious:boolean,
       _id:string
+      createdAt:string
   }
 
   export type { TransactionArray};
